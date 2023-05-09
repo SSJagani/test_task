@@ -52,12 +52,6 @@
 {% for fieldset in adminform %}
   {% include "admin/includes/fieldset.html" %}
 {% endfor %}
-    {% if opts.model_name == 'user'%}
-        <div class="flex-container">
-            <label for="id_pull_credit_report">Pull Credit Report:</label>
-            <input type="button" id="id_pull_credit_report" onclick="pull_report_function()" class="vTextField" style="margin-left: 80px;" value="Pull report">
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block after_field_sets %}{% endblock %}
@@ -79,31 +73,6 @@
                 data-model-name="{{ opts.model_name }}"
             {% endif %}
             async>
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script>
-        function pull_report_function(){
-            $.ajax({
-                url: '/get_pdf',
-                type: 'get',
-                xhrFields: {
-                    responseType: 'blob'
-                },
-                success: function(data, textStatus, jqXHR) {
-                    console.log(data)
-                    var link = document.createElement('a');
-                    var url = window.URL || window.webkitURL;
-                    link.href = url.createObjectURL(data);
-                    link.target = '_blank'
-                    document.body.appendChild(link);
-                    link.click();
-                },
-                error: function(jqXHR) {
-                    console.log("Server error.")
-                }
-            })
-        }
     </script>
 {% endblock %}
 
